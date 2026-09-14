@@ -109,7 +109,7 @@ export function UsersPanel({ selfId, locale, authMode }: { selfId: string; local
                 <TableCell className="text-end">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild><Button variant="ghost" size="icon-sm" disabled={busy} aria-label={t("actions")}><MoreHorizontal /></Button></DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent align="end" className="w-auto whitespace-nowrap">
                       <DropdownMenuItem onClick={() => openStats(u)}><BarChart3 />{t("stats")}</DropdownMenuItem>
                       {u.role === "admin"
                         ? u.userId !== selfId && <DropdownMenuItem variant="destructive" onClick={() => setRoleChange({ u, role: "user" })}><ShieldOff />{t("revokeAdmin")}</DropdownMenuItem>

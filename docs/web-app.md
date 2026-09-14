@@ -76,7 +76,8 @@ as `primary` (paper in dark), one teal `highlight` (links, scanner beam, key chi
   "Made with ♥ for Web" centred, the contact icons at the end (mirrored in RTL).
 - `Button` has a `highlight` variant (teal) for the one primary CTA of a page; `primary`
   stays navy elsewhere. `components/LineTabs.tsx` is the project's text-tab style (one rule,
-  mono labels, sliding teal indicator) — reuse it instead of styling the raw shadcn `Tabs`.
+  mono labels, sliding teal indicator) — reuse it instead of styling the raw shadcn `Tabs`. A
+  strip wider than its column scrolls sideways in its own wrapper and brings the active tab into view.
   Every public section puts its content in `components/Container.tsx` so a section can paint
   its background edge to edge (hero, Privacy).
 
@@ -103,6 +104,11 @@ over Clerk's `openUserProfile()` / `signOut()`; no `<UserButton>`). The sidebar 
 pages, Settings among them; the menu adds only the two pages outside the app — API reference
 and About — each with a trailing external-link mark. `/` sends the local build and a signed-in
 session to `/app`, so About points at `/about`: the same `LandingPage` without that redirect.
+The public header (`components/public/PublicHeader.tsx`) keeps language, theme and the account
+slot on every width; below `md` a menu sheet (from the end side) links the landing's sections
+(`LANDING_SECTIONS` in `lib/links.ts`, each section `scroll-mt-14` under the sticky header — on
+another page to `/about#…` for the same reason), the API reference, GitHub and the two legal
+pages, and below 400 px the logo narrows to its tile.
 
 Auth has no pages: Clerk modals — `SignInButton mode="modal"` in the header,
 `AuthModalOpener` on the landing when the URL carries `?sign-in=1`
@@ -228,7 +234,7 @@ the engine's default filled in from `GET /models`).
   Hebrew VALUE, never on a cell or on a row of several values, or the row itself reverses. The
   JSON tab is capped at 40vh and scrolls inside its own box.
 - A PDF's preview is the engine's own `page.preview` (the pixels the bboxes refer to), never
-  a browser render. The upload zone (`extract.hint`) and `/api-reference` (`docs.image`) state the
+  a browser render. The line under the upload zone (`extract.hint`) and `/api-reference` (`docs.image`) state the
   resolution guidance.
 
 ## Text and locales

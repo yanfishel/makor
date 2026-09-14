@@ -7,7 +7,7 @@ import type { LandingMessages } from "./Landing";
 export function ApiSection({ m, siteUrl, docsHref, copy }: { m: LandingMessages["api"]; siteUrl: string; docsHref: string; copy: CopyLabels }) {
   const s = snippets(siteUrl).extract;
   return (
-    <section id="api" className="space-y-6">
+    <section id="api" className="scroll-mt-14 space-y-6">
       <div><h2 className="text-3xl font-semibold tracking-tight">{m.title}</h2><p className="mt-1 max-w-2xl text-muted-foreground">{m.text}</p></div>
       <div className="grid gap-6 border-t border-foreground pt-6 lg:grid-cols-2">
         <LineTabs defaultValue="curl" dir="ltr" lang="en" className="min-w-0">

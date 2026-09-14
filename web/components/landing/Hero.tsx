@@ -37,8 +37,9 @@ export function Hero({ m, cloudHref, githubUrl, n }: { m: LandingMessages["hero"
       <HeroBackdrop variant={BACKDROP} />
       <Container className="grid gap-10 pt-10 pb-6 lg:grid-cols-[1.05fr_1fr] lg:gap-x-10 lg:gap-y-6 lg:pt-16">
         <div className="space-y-6 lg:col-start-1 lg:row-start-1">
-          {/* The title is two lines by design ("Documents in, / JSON out"): the message carries the break. */}
-          <h1 className="text-5xl font-semibold tracking-[-0.025em] whitespace-pre-line lg:text-6xl">{m.title}</h1>
+          {/* The title is two lines by design ("Documents in, / JSON out"): the message carries the break.
+              Below 400 px the size follows the viewport (12vw), or "Documents in," breaks again on a 320 px screen. */}
+          <h1 className="text-[clamp(2.25rem,12vw,3rem)] leading-none font-semibold tracking-[-0.025em] whitespace-pre-line lg:text-6xl">{m.title}</h1>
           <p className="max-w-xl text-lg text-muted-foreground">{m.subtitle}</p>
           <div className="flex flex-wrap gap-3">
             <Cta variant="highlight" href={cloudHref} icon={<Rocket className="size-9" strokeWidth={1.5} />} label={m.ctaCloud.label} sub={n(m.ctaCloud.sub)} />

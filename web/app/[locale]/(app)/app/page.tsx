@@ -1,11 +1,11 @@
-import { ArrowRight, ScanText } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { BarList } from "@/components/BarList";
 import { DocumentsTable } from "@/components/DocumentsTable";
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
 import { StatTiles } from "@/components/StatTiles";
-import { Button } from "@/components/ui/button";
+import { ExtractCta } from "@/components/app/ExtractCta";
 import { Link } from "@/i18n/routing";
 import { getConfig } from "@/lib/config";
 import { currentUser } from "@/lib/current-user";
@@ -27,6 +27,7 @@ export default async function Dashboard({ params }: { params: Promise<{ locale: 
   const { locale } = await params;
   const t = await getTranslations("dashboard");
   const tl = await getTranslations("labels");
+  const ta = await getTranslations("app");
   const label = (ns: "docTypes" | "verdicts", key: string) => (tl.has(`${ns}.${key}`) ? tl(`${ns}.${key}`) : key);
   const cfg = getConfig();
   const { userId, unlimited } = await currentUser();
@@ -39,7 +40,7 @@ export default async function Dashboard({ params }: { params: Promise<{ locale: 
     : mode.kind === "byok" ? { label: t("mode"), value: t("byokActive"), hint: t("byokHint"), text: true }
     : mode.kind === "unlimited" ? { label: t("mode"), value: t("unlimited"), hint: t("unlimitedHint"), text: true }
     : { label: t("trialLeft"), value: String(mode.left), hint: t("ofN", { n: mode.total }) };
-  const cta = <Button asChild variant="highlight"><Link href="/app/extract"><ScanText />{t("extractCta")}</Link></Button>;
+  const cta = <ExtractCta label={t("extractCta")} short={ta("extract")} />;
   return (
     <div className="space-y-6">
       <PageHeader title={t("title")} actions={cta} />

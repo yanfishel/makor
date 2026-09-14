@@ -5,7 +5,7 @@ import type { LandingMessages } from "./Landing";
 
 export function WhatIsRead({ m }: { m: LandingMessages["reads"] }) {
   return (
-    <section id="reads" className="space-y-6">
+    <section id="reads" className="scroll-mt-14 space-y-6">
       <div><h2 className="text-3xl font-semibold tracking-tight">{m.title}</h2><p className="mt-1 text-muted-foreground">{m.lead}</p></div>
       <ul className="border-t border-foreground">
         {m.types.map((t, i) => { const r = READ_TYPES[i]; return (

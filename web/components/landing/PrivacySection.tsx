@@ -4,7 +4,7 @@ import type { LandingMessages } from "./Landing";
 
 export function PrivacySection({ m, policyHref }: { m: LandingMessages["privacy"]; policyHref: string }) {
   return (
-    <section id="privacy" className="relative overflow-hidden bg-ink py-10 text-ink-foreground sm:py-12">
+    <section id="privacy" className="scroll-mt-14 relative overflow-hidden bg-ink py-10 text-ink-foreground sm:py-12">
       <GuillocheBand className="inset-x-0 top-auto bottom-0 h-40 text-ink-foreground/25" y={0.9} lines={22} amplitude={90} wavelength={240} />
       <Container className="relative">
         <h2 className="text-3xl font-semibold tracking-tight">{m.title}</h2>
