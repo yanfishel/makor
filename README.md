@@ -325,7 +325,7 @@ cd engine && ../.venv/bin/python scripts/eval.py ../samples --url http://127.0.0
 engine/   FastAPI extraction engine — app/ (pipeline, readers, validation), tests/, scripts/
 web/      Next.js app — app/ routes, components/, lib/ (handlers, registries, db), messages/ en + he
 deploy/   Caddyfile
-.github/  workflows: tests on every PR and push, images + deploy on a published release, @claude and PR review
+.github/  workflows: tests on every PR and push, images + deploy on a published release, @claude, Claude review on a label
 scripts/  run.sh, stop.sh
 docs/     the references below, screenshots, diagrams
 ```

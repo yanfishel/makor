@@ -323,10 +323,12 @@ Document photos are sensitive personal data (Israeli Privacy Protection Law, Ame
 
 ## Conventions
 
-- **Every change, however small, goes on a new branch** — never commit to `main`. Merge only
-  when tests, lint and build pass (`deploy.yml`'s engine and web jobs run them on every push and
-  pull request). Issues, pull requests and comments are open to the maintainer only; the Claude
-  workflows start only for the owner's events. **A published release deploys to production**
+- **Every change, however small, goes on a new branch and reaches `main` through a pull request**
+  on `yanfishel/makor` — never commit, merge or push to `main` locally. Run the checks before
+  pushing the branch; merge the PR (`gh pr merge`) only once its checks (`deploy.yml`'s engine and
+  web jobs) pass, then delete the branch and pull `main`. Claude reviews a PR only on request: the
+  `claude-review` label (`gh pr edit <n> --add-label claude-review`). Issues, pull requests and
+  comments are open to the maintainer only; the Claude workflows start only for the owner's events. **A published release deploys to production**
   (`.github/workflows/deploy.yml`), after the owner approves the `production` environment; the
   server's `.env` lives only on the server. Workflow actions are pinned to commit SHAs — an
   update changes the SHA and its version comment together.

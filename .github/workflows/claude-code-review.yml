@@ -1,16 +1,22 @@
-# An automatic Claude review on the owner's own pull requests, from this repository's branches.
-# Anyone else's pull request — a fork's included — gets none: it would spend the owner's Claude
-# quota on outside code and put that code next to the token.
+# A Claude review only on request: the owner puts the `claude-review` label on one of their own
+# pull requests from this repository's branches (`gh pr edit <n> --add-label claude-review`; take
+# the label off and put it back to review again). Every pull request is opened by the owner, so an
+# automatic review would spend the Claude quota on each one. Anyone else's label or pull request —
+# a fork's included — starts nothing.
 
 name: Claude Code Review
 
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review, reopened]
+    types: [labeled]
 
 jobs:
   claude-review:
-    if: github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login == github.repository_owner
+    if: >-
+      github.event.label.name == 'claude-review' &&
+      github.actor == github.repository_owner &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login == github.repository_owner
 
     runs-on: ubuntu-latest
     permissions:
