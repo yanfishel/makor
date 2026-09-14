@@ -1,0 +1,598 @@
+{
+  "app": {
+    "title": "Makor", "extract": "Extract", "dashboard": "Dashboard", "keys": "API keys", "settings": "Settings", "signIn": "Sign in", "localMode": "Local mode",
+    "extractCta": "Extract a document", "docs": "API reference", "about": "About", "users": "Users", "documents": "Documents", "registries": "Registries",
+    "copy": "Copy", "copied": "Copied", "cancel": "Cancel", "openApp": "Open app", "menu": "Menu", "language": "Language",
+    "theme": { "toggle": "Theme", "light": "Light", "dark": "Dark", "system": "System" },
+    "localUser": "Local user",
+    "mode": { "local": "Local mode", "localHint": "no account, no limits", "byok": "Your Anthropic key", "byokHint": "billed by Anthropic", "unlimited": "Unlimited", "unlimitedHint": "on the server's key", "trial": "Free trial", "trialLeft": "{left} of {total} documents left" },
+    "user": { "admin": "Admin", "menu": "Account menu", "manageAccount": "Manage account", "signOut": "Sign out" }
+  },
+  "dashboard": {
+    "title": "Dashboard", "extractCta": "Extract a document", "total": "Documents", "last30": "Last 30 days", "mode": "Mode",
+    "localMode": "Local", "localHint": "no account, no limits", "byokActive": "Your Anthropic key", "byokHint": "billed by Anthropic", "trialLeft": "Trial left", "ofN": "of {n}", "medianLatency": "Median latency", "cost30": "Cost, 30 days", "costTotal": "{total} total",
+    "byType": "By document type", "byVerdict": "By validation verdict", "recent": "Recent documents", "empty": "No documents yet.",
+    "colDate": "Date", "colType": "Type", "colVerdict": "Verdict", "colRegistries": "Registries", "colStatus": "Status", "colBackend": "Engine", "colSource": "Source", "colLatency": "Latency", "colTokens": "Tokens in / out", "colCost": "Cost",
+    "unlimited": "Unlimited", "unlimitedHint": "on the server's Anthropic key",
+    "prev": "Previous", "next": "Next", "pageOf": "page {page} of {pages}", "allDocuments": "All documents"
+  },
+  "extract": {
+    "heading": "Extract a document",
+    "engine": "Engine",
+    "elapsed": "Elapsed time",
+    "intro": "Drop a photo or scan of an Israeli document or a cheque. JPEG, PNG, WebP or PDF up to 30 MB; a PDF's first page is read.",
+    "hint": "Scan or photograph at 150 dpi or more. The engine estimates each document's resolution and warns below 150 dpi — expect misreads of small print and handwriting there.",
+    "stages": { "detect": "Detect", "classify": "Classify", "read": "Read", "mergeValidate": "Merge & validate" },
+    "scene": { "fit": "Fit", "actual": "100%", "zoomIn": "Zoom in", "zoomOut": "Zoom out", "region": "region", "skipped": "skipped", "unreadable": "unreadable", "fields": "{n} fields", "waiting": "Waiting for the page…" },
+    "sefachType": "TZ Sefach",
+    "sefach": {"sefach": "Sefach", "children": "Children"},
+    "ledger": { "reading": "Reading…", "notes": "Notes", "empty": "Fields appear here as each document is read." },
+    "drop": "Drop a photo or scan here, or choose a file",
+    "choose": "Choose file",
+    "reset": "Another document",
+    "field": "Field",
+    "fields": "Fields", "json": "JSON", "download": "Download JSON",
+    "verdict": "Validation", "warnings": "Warnings", "regions": "Detected regions",
+    "value": "Value", "confidence": "Confidence",
+    "trialLeft": "trial left: {n}",
+    "goToSettings": "Open settings",
+    "errors": {
+      "TRIAL_EXHAUSTED": "Your free documents are used up. Add your own Anthropic API key in settings to continue.",
+      "ANTHROPIC_KEY_INVALID": "Anthropic rejected the API key saved in settings.",
+      "ANTHROPIC_UNREACHABLE": "Could not reach Anthropic to check the key.",
+      "KEY_DECRYPT_FAILED": "The saved key cannot be decrypted — remove and re-enter it in settings.",
+      "ENGINE_UNAVAILABLE": "The extraction engine is not reachable.",
+      "ENGINE_TIMEOUT": "Extraction took too long — try again.",
+      "ENGINE_MISCONFIGURED": "The engine rejected the web app (secret mismatch).",
+      "TOO_LARGE": "File is too large (max 30 MB)",
+      "NOT_IMAGE": "File is not an image or a PDF",
+      "NO_FILE": "No file was sent.",
+      "UNAUTHENTICATED": "Sign in to extract documents.",
+      "TOKEN_INVALID": "Invalid API key.",
+      "generic": "Extraction failed: {detail}"
+    }
+  },
+  "documents": {
+    "title": "Documents",
+    "intro": "Every document you ran, newest first.",
+    "dates": "Dates", "any": "Any", "reset": "Reset",
+    "range": { "all": "All time", "from": "from {date}", "until": "until {date}", "presets": { "today": "Today", "7d": "Last 7 days", "30d": "Last 30 days", "all": "All time" } },
+    "count": "{n} documents",
+    "noMatch": "No documents match these filters."
+  },
+  "registries": {
+    "title": "Registries",
+    "intro": "Search public Israeli registries: restricted bank accounts, the companies registry and the terror designation lists. Filled fields combine: a result matches all of them.",
+    "fields": { "id": "ID / company number", "bank": "Bank", "branch": "Branch", "account": "Account", "name": "Name" },
+    "groups": { "who": { "title": "Person or company", "sources": "Registrar of Companies · Bank of Israel: severely restricted · NBCTF lists" }, "account": { "title": "Bank account", "sources": "Bank of Israel: restricted accounts" } },
+    "anyBank": "Any bank",
+    "search": "Search",
+    "reset": "Reset",
+    "tooShort": "Fill in a number, an account, or at least two letters of a name. Bank and branch only narrow a search.",
+    "neverLoaded": "The registries have not been downloaded yet.",
+    "neverLoadedHint": "An admin downloads them in Settings.",
+    "openSettings": "Open settings",
+    "noSourceCarries": "No registry has all of these fields together. Clear one of them.",
+    "count": "Matches: {n}",
+    "asOf": "data as of {date}",
+    "notLoaded": "Not downloaded yet.",
+    "lastFailed": "The last download failed; these are the previous data.",
+    "limited": "Showing {shown} of {total}. Narrow the search.",
+    "nameMatch": "Matched by name only. Verify the details before relying on it.",
+    "skipped": "Not searched: {source} (has no {fields}).",
+    "noMatches": "No matches.",
+    "sources": { "boi_accounts": "Bank of Israel: restricted accounts", "boi_severe": "Bank of Israel: severely restricted corporations", "nbctf_individuals": "NBCTF: designated individuals", "nbctf_orgs": "NBCTF: designated organizations", "companies": "Registrar of Companies" },
+    "cols": { "bank": "Bank", "branch": "Branch", "account": "Account", "start": "Restricted from", "end": "Until", "state": "State", "number": "Number", "name": "Name", "names": "Names", "type": "Type", "status": "Status", "violator": "Violator", "city": "City", "ids": "IDs", "designated": "Designated", "designation": "Designation", "nationality": "Nationality", "dob": "Born", "country": "Country" },
+    "active": "active",
+    "expired": "expired",
+    "cancelled": "cancelled",
+    "check": {
+      "section": "Registries",
+      "fields": { "id_number": "ID number", "spouse_id_number": "Spouse ID", "child_id_number": "Child ID", "drawer_id_number": "Drawer ID", "guarantor_id_number": "Guarantor ID", "account": "Account", "name_he": "Name (Hebrew)", "name_en": "Name (English)" },
+      "levels": { "alert": "alert", "info": "info" },
+      "by": { "id": "by number", "account": "by account", "name": "by name" },
+      "verify": "verify the details",
+      "until": "until {date}",
+      "designated": "designated {date}",
+      "notFound": "Not found",
+      "notLoaded": "The registries have not been downloaded",
+      "nothingChecked": "Nothing to look up — no number, account or full name was read",
+      "failed": "The registries check did not run",
+      "pill": "match",
+      "pillFailed": "check failed",
+      "tipItem": "{source} — {by} ({count})",
+      "tipInfo": "info: {source} — {by} ({count})",
+      "tipDetails": "details on the document page"
+    }
+  },
+  "labels": {
+    "docTypes": { "teudat_zehut": "Teudat Zehut", "israeli_passport": "Israeli passport", "foreign_passport": "Foreign passport", "israeli_drivers_license": "Driver's license", "disability_card": "Disability card", "senior_citizen_card": "Senior citizen card", "weapon_license": "Weapon license", "cheque": "Cheque", "not_a_document": "Not a document" },
+    "verdicts": { "verified": "Verified", "partial": "Partial", "unverified": "Unverified", "mismatch": "Mismatch" },
+    "statuses": { "ok": "OK", "pending": "Pending", "failed": "Failed" },
+    "engines": { "ollama": "Ollama", "anthropic": "Anthropic" },
+    "sources": { "ui": "Web", "api": "API" },
+    "fields": {
+      "last_name_he": "Family name", "first_name_he": "First name", "last_name_en": "Family name (Latin)", "first_name_en": "First name (Latin)",
+      "id_number": "ID number", "passport_number": "Passport number", "date_of_birth": "Date of birth", "sex": "Sex", "nationality": "Nationality", "place_of_birth": "Place of birth",
+      "father_name_he": "Father's name", "mother_name_he": "Mother's name", "date_of_issue": "Issued", "date_of_expiry": "Valid until",
+      "license_number": "Licence number", "address": "Address", "categories": "Licence categories", "file_number": "File number",
+      "previous_last_name_he": "Previous family name", "previous_first_name_he": "Previous first name", "maiden_name_he": "Maiden name", "marital_status": "Marital status",
+      "street": "Street", "house_number": "House number", "entrance": "Entrance", "apartment": "Apartment", "city": "City", "postal_code": "Postal code",
+      "bank_name": "Bank", "bank_code": "Bank code", "branch_number": "Branch", "account_number": "Account number", "cheque_number": "Cheque number",
+      "drawer_name": "Drawer", "drawer_id_number": "Drawer ID", "drawer_address": "Drawer address", "drawer_phone": "Drawer phone",
+      "payee": "Payee", "amount": "Amount", "amount_in_words": "Amount in words", "date": "Date", "guarantor_name": "Guarantor", "guarantor_id_number": "Guarantor ID"
+    },
+    "fieldGroups": { "spouse": "Spouse", "child": "Child {n}" }
+  },
+  "document": {
+    "title": "Stored result",
+    "notStored": "This document's result was not stored.",
+    "decryptFailed": "The stored result cannot be decrypted (master key changed).",
+    "delete": "Delete result",
+    "confirmDelete": "Delete this stored result?",
+    "deleteFailed": "Delete failed, try again."
+  },
+  "keys": {
+    "title": "API keys",
+    "intro": "Use a key as `Authorization: Bearer ak_…` on /api/v1/*. It is shown once at creation.",
+    "empty": "No API keys yet.",
+    "namePlaceholder": "Key name (e.g. CI)",
+    "create": "Create key",
+    "shownOnce": "Copy your key now — it will not be shown again:",
+    "confirmRevoke": "Revoke this key? Requests using it will get 401.",
+    "colName": "Name",
+    "colPrefix": "Prefix",
+    "colCreated": "Created",
+    "colLastUsed": "Last used",
+    "revoke": "Revoke",
+    "revokeFailed": "Revoke failed, try again.",
+    "createFailed": "Create failed, try again.",
+    "loadFailed": "Could not load API keys.",
+    "errors": {
+      "KEY_LIMIT": "You already have 20 active keys — revoke one first.",
+      "INVALID_NAME": "Key name must be 1–64 characters."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "loading": "Loading settings…",
+    "saved": "Saved",
+    "tabs": { "key": "Anthropic key", "engine": "Engine", "storage": "Storage", "registries": "Registries" },
+    "keySection": "Anthropic API key",
+    "keyIntro": "Bring your own key: extraction then runs on your Anthropic account instead of the free trial.",
+    "keyPlaceholder": "sk-ant-…",
+    "keySaved": "Saved key ending in {last4}",
+    "verify": "Verify",
+    "save": "Save",
+    "remove": "Remove",
+    "confirmRemoveKey": "Remove the saved Anthropic key?",
+    "verdictValid": "The key works.",
+    "verdictInvalid": "Anthropic rejected this key.",
+    "verdictUnreachable": "Could not reach Anthropic to check the key.",
+    "cacheNote": "Anthropic's prompt cache is per API key: at low traffic most requests pay the cache write (≈ $0.065 vs $0.045 for an A4 scan).",
+    "modelSection": "Model",
+    "recommended": "recommended — verified on real documents",
+    "unknownModel": "{model} (not available)",
+    "storeSection": "Stored results",
+    "storeLabel": "Store extraction results (encrypted) so they can be reopened from the dashboard",
+    "confirmDeleteStored": "Also delete the results stored so far?",
+    "keepResults": "Keep stored results",
+    "deleteResults": "Delete them",
+    "deleteAll": "Delete all stored results",
+    "confirmDeleteAll": "Delete every stored result? This cannot be undone.",
+    "deleted": "{n} stored results deleted",
+    "backendSection": "Extraction backend",
+    "effBackend": "Backend", "effModel": "Model", "effEngine": "Engine", "engineUp": "reachable",
+    "byDefault": "engine default", "yourChoice": "your choice", "withDefault": "{label} (default)", "resetEngine": "Reset to engine defaults",
+    "notInstalledShort": "{label} — not installed",
+    "anthropicNeedsKey": "No Anthropic key: the engine was started without one and none is saved here. Add yours on the Anthropic key tab to use this backend.",
+    "backendOllama": "Local (Ollama)",
+    "backendAnthropic": "Anthropic API",
+    "engineDown": "Engine not reachable",
+    "localModelSection": "Local model",
+    "localModelNote": "Switching makes Ollama load the other model: the first document after a switch takes about {seconds} s longer.",
+    "localModelUnavailable": "{model} (not available)",
+    "notInstalled": "{label} — not installed: ollama pull {tag}",
+    "ollamaDown": "Ollama not reachable",
+    "errors": {
+      "UNAUTHENTICATED": "Your session has expired, sign in again.",
+      "ANTHROPIC_KEY_INVALID": "Anthropic rejected this key.",
+      "ANTHROPIC_UNREACHABLE": "Could not reach Anthropic to check the key.",
+      "generic": "Something went wrong, try again."
+    },
+    "registries": {
+      "section": "Public registries",
+      "intro": "Downloads every source again and replaces its data. A source that fails keeps its previous data.",
+      "refreshAll": "Refresh all",
+      "refreshing": "Refreshing…",
+      "guidance": "The companies registry takes about a minute and a half and several hundred MB of traffic.",
+      "cols": { "source": "Source", "dataDate": "Data as of", "fetchedAt": "Downloaded", "rows": "Records", "duration": "Took", "status": "Status" },
+      "states": { "never": "never", "running": "running", "ok": "ok", "error": "error", "interrupted": "interrupted" },
+      "doneAll": "All registries refreshed",
+      "doneSome": "Refreshed {ok} of {total}. Failed: {failed}",
+      "loadFailed": "Could not load the registries status",
+      "checkSection": "Check extractions",
+      "checkLabel": "Check extracted documents against the registries",
+      "checkIntro": "Numbers and cheque accounts are matched exactly; the holder's full name only against the NBCTF individuals list. The document row keeps a summary without personal data; the details are kept only with a stored result.",
+      "checkNotLoaded": "The check is on, but the registries have not been downloaded yet — extractions will say so."
+    }
+  },
+  "users": {
+    "title": "Users", "loading": "Loading users…", "loadFailed": "Could not load users.",
+    "intro": "Everyone who has signed in. The trial cap is {n} documents; admins and exempted users run on the server's Anthropic key without a cap.",
+    "colUser": "User", "colRole": "Role", "colTrial": "Trial", "colDocs": "Documents", "colMonth": "This month", "colLastSeen": "Last seen",
+    "roleAdmin": "admin", "roleUser": "user", "you": "you", "unlimited": "unlimited", "exempt": "exempt", "ofN": "{used} of {n}", "byok": "own key",
+    "stats": "Stats", "makeAdmin": "Make admin", "revokeAdmin": "Revoke admin", "liftLimit": "Lift trial limit", "restoreLimit": "Restore trial limit",
+    "confirmMakeAdmin": "Give {user} the admin role? Admins see every user and run without a trial cap.",
+    "confirmRevokeAdmin": "Remove the admin role from {user}?",
+    "updateFailed": "Update failed.", "selfDemote": "You cannot remove your own admin role.",
+    "modalTitle": "User statistics", "signedUp": "Signed up", "lastDocument": "Last document", "never": "never",
+    "total": "Documents", "last30": "Last 30 days", "okThisMonth": "OK this month", "failedThisMonth": "Failed this month", "medianLatency": "Median latency", "cost": "Cost, 30 days / total",
+    "byType": "By document type", "byVerdict": "By validation verdict", "recent": "Recent documents", "empty": "No documents yet.",
+    "storeResults": "Stores results", "model": "Model", "serverDefault": "server default", "yes": "yes", "no": "no",
+    "colDate": "Date", "colType": "Type", "colVerdict": "Verdict", "colStatus": "Status", "colBackend": "Engine", "colSource": "Source", "colLatency": "Latency", "colTokens": "Tokens in / out", "colCost": "Cost",
+    "prev": "Previous", "next": "Next", "pageOf": "page {page} of {pages}", "actions": "Actions",
+    "tabs": { "users": "Users", "invitations": "Invitations" },
+    "deleteUser": "Delete user",
+    "confirmDelete": "This permanently deletes the account {user}, its {n} documents with their stored results, its API keys and settings. It cannot be undone.",
+    "deleted": "{user} deleted.",
+    "selfDelete": "You cannot delete your own account.",
+    "deleteFailed": "Clerk did not delete the account; nothing was removed.",
+    "invitationsIntro": "Sign-up is by invitation. Clerk e-mails the link, valid for 30 days.",
+    "invitationsLoadFailed": "Could not load invitations.",
+    "invitationsEmpty": "No invitations yet.",
+    "inviteEmail": "E-mail address",
+    "inviteSend": "Send invitation",
+    "inviteSent": "Invitation sent to {email}.",
+    "inviteResent": "Invitation sent again to {email}.",
+    "inviteRevoked": "Invitation for {email} revoked.",
+    "colInvEmail": "E-mail", "colInvBy": "Invited by", "colInvSent": "Sent", "colInvStatus": "Status",
+    "invitedBySystem": "setup",
+    "invitedByDeleted": "deleted user",
+    "invStatus": { "pending": "pending", "accepted": "accepted", "revoked": "revoked", "expired": "expired" },
+    "resend": "Send again",
+    "revoke": "Revoke",
+    "confirmRevoke": "Revoke the invitation for {email}? The link in the e-mail stops working.",
+    "inviteErrors": { "EMAIL_INVALID": "That is not an e-mail address.", "ALREADY_REGISTERED": "This address already has an account.", "ALREADY_INVITED": "An invitation to this address is pending — send it again instead.", "INVITE_SEND_FAILED": "Clerk did not send the invitation. Try again.", "INVITATION_CLOSED": "This invitation was already accepted or revoked.", "INVITE_REVOKE_FAILED": "Clerk did not revoke the invitation. Try again.", "generic": "The request failed." }
+  },
+  "landing": {
+    "copy": "Copy", "copied": "Copied",
+    "hero": {
+      "title": "Documents in,\nJSON out",
+      "subtitle": "OCR for teudat zehut, passports, driver's licenses and bank cheques — Hebrew and Latin fields, check-digit validation, public registry checks, one API call.",
+      "ctaCloud": { "label": "Request access", "sub": "By invitation · {n} documents free" }, "ctaSelfHost": { "label": "Get it", "sub": "Self-host from GitHub" },
+      "facts": ["Images are never stored", "Check digits verified locally, no model in the loop", "One multipart POST, JSON back"],
+      "demoLabel": "Extraction demo with synthetic data"
+    },
+    "how": {
+      "title": "How it works",
+      "steps": [
+        { "title": "Detect", "text": "Classical image analysis finds every document on the page — a card, a sefach, a cheque — and returns its box; the vision model is asked only when it finds nothing." },
+        { "title": "Crop at full resolution", "text": "Each document is cut from the original image, never from a downscaled page, so small print stays readable." },
+        { "title": "Extract", "text": "Structured output: the model fills a fixed schema — Hebrew names from the print, Latin names only from the MRZ, dates as ISO." },
+        { "title": "Validate locally", "text": "ICAO 9303 MRZ and MICR check digits, the Israeli ID check digit and printed-vs-machine-read cross-checks — pure math, no model in the loop." }
+      ]
+    },
+    "reads": {
+      "title": "What is read",
+      "lead": "Six document types, one response shape.",
+      "types": [
+        { "name": "Teudat zehut (ID card) + sefach", "note": "Both card layouts and the appendix sheet" },
+        { "name": "Israeli passport", "note": "TD3 MRZ with check digits" },
+        { "name": "Foreign passport", "note": "Any country, Latin names only" },
+        { "name": "Driver's license", "note": "Field numbers 4d, 5, 8, 9" },
+        { "name": "Disability card", "note": "Names, ID and file number, validity month" },
+        { "name": "Bank cheque", "note": "Front, and the guarantee stamp on the back" }
+      ]
+    },
+    "registries": {
+      "title": "Public registries",
+      "lead": "Check what was read against Israeli public lists, or search them yourself.",
+      "sources": [
+        { "name": "Bank of Israel", "note": "Restricted bank accounts and severely restricted corporations" },
+        { "name": "NBCTF", "note": "Designated terror operatives and organizations" },
+        { "name": "Registrar of Companies", "note": "Registered companies, their status and the violator mark" }
+      ],
+      "check": { "title": "On every extraction", "text": "Switch it on in settings or per request: every number and account read is looked up exactly, the full name as whole words." },
+      "search": { "title": "Search", "text": "The Registries page and one API call search by number, bank account or name, results grouped by registry with the date of its data." },
+      "note": "Informational only: the lists are local copies as of their last download, a match may be wrong, and \"not found\" does not mean unlisted. Nothing read from a document is sent to any registry."
+    },
+    "privacy": {
+      "title": "Privacy",
+      "points": [
+        "Images are read in memory and discarded once the result is returned — never stored, never logged.",
+        "Per document we keep metadata — time, type, verdict, model, tokens, cost — never the image, its name or the values read from it.",
+        "The result is stored only if you switch it on, encrypted, until you delete it.",
+        "Nothing is sold or used for training. Servers are in Israel; documents are read by Anthropic's API and sign-in runs on Clerk, both in the US. The self-hosted variant with a local model never leaves your machine."
+      ],
+      "law": "Personal data is processed under the Israeli Privacy Protection Law (Amendment 13).",
+      "policyLink": "Read the Privacy Policy"
+    },
+    "ways": {
+      "title": "Two ways to use it",
+      "lead": "Same engine, same API, your choice where it runs.",
+      "cloud": { "title": "Cloud", "text": "Sign-up is by invitation: an admin invites you by e-mail, then {n} documents at our expense, then your own Anthropic API key — billed by Anthropic, no subscription here.", "cta": "Request access" },
+      "selfHost": { "title": "Self-host", "text": "Open source. One compose command brings up the web app, the engine and Caddy; Ollama runs the vision model on your own GPU.", "cta": "View on GitHub" }
+    },
+    "api": {
+      "title": "API",
+      "text": "Every account gets REST access with its own key. One multipart POST, JSON back.",
+      "docsLink": "Read the API reference"
+    },
+    "footer": { "docs": "API reference", "terms": "Terms of Use", "privacy": "Privacy Policy", "signIn": "Sign in", "privacyNote": "Personal data is processed under the Israeli Privacy Protection Law." }
+  },
+  "docs": {
+    "toc": "On this page",
+    "title": "API reference",
+    "intro": "The web app on your site's origin serves the public API; the extraction engine behind it is never exposed. Every response is JSON.",
+    "auth": { "title": "Authentication", "text": "Create a key under API keys in the app (it is shown once) and send it as a bearer token. Keys work in both the cloud and the self-hosted variant." },
+    "image": { "title": "Image requirements", "items": ["One document per image or PDF page; only a PDF's first page is read. A card with its sefach sheet on one A4, or a cheque's front and back on one scan, count as one document.", "Formats: JPEG, PNG, WebP or PDF, up to 30 MB.", "Resolution: 150 dpi or more. Below 150 dpi reading quality is not guaranteed.", "The whole document in the frame, flat and evenly lit, no glare; a scan beats a photo.", "The response reports each document's estimated resolution in `regions[].dpi` and adds a warning below 150 dpi."] },
+    "endpointGroups": { "extraction": "Extraction", "search": "Registries search", "settings": "Settings" },
+    "limits": { "title": "Limits", "items": [
+      "Requests: each API key gets 30 requests a minute across `/api/v1/*` and a separate 20 a minute for the registries search. A burst up to the limit passes, then requests come back one at a time; over it the answer is `429 RATE_LIMITED` with `Retry-After` in seconds. A signed-in browser session counts per user.",
+      "A self-hosted instance sets these with `API_RATE_LIMIT_PER_MIN` and `API_SEARCH_RATE_LIMIT_PER_MIN` (`0` = no limit); the counters live in the server's memory and start over when it restarts.",
+      "Uploads: one image or PDF per request, up to 30 MB; only a PDF's first page is read.",
+      "Waiting: an extraction can take up to 10 minutes including its place in the engine's queue; a full queue answers `503` with `Retry-After`.",
+      "Trial: in the cloud a new account reads a limited number of documents on the service's own key, then `402 TRIAL_EXHAUSTED` — add your Anthropic key in settings to go on.",
+      "Registries search: up to 50 rows per source with the true `total`; a query needs a number, an account or at least two letters of a name.",
+      "Stored results: a result is kept only while `store_results` is on; a key can turn it off, and only the signed-in UI turns it on."
+    ] },
+    "snippetTitles": { "extract": "Extract a document and check it against the registries", "search": "Search the registries", "settings": "Read and change the settings" },
+    "endpointsTitle": "Endpoints", "colMethod": "Method", "colPath": "Path", "colDescription": "Description",
+    "endpoints": {
+      "extract": "Multipart field `file` (image or PDF, ≤ 30 MB; a PDF's first page is read, further pages are reported in `warnings`; pages are downscaled to an A4-at-300-dpi long edge on ingest) → fields with per-field confidence, validation report, warnings, detected regions, plus `meta` (`document_id`, `mode`, `trial_remaining`, `backend`, `model`). Wait up to ENGINE_TIMEOUT_MS (10 min by default) — requests queue behind each other. Scan at 150 dpi or more (see *Image requirements*). Optional multipart field `check_registries` — lower-case `true` / `false` only (a Python `True` is not lower-case and gets `400 INVALID_BODY`) — runs or skips the registries check for this request, whatever the settings say.",
+      "usage": "Mode (`local` / `trial` / `byok`), trial counters (`trial_remaining` is null and `unlimited` true for accounts exempted by an admin), documents this month, lifetime total.",
+      "settingsGet": "The key owner's settings: `store_results`, `check_registries`, `backend`, `model`, `local_model`, plus `model_choices` and `default_model`. The Anthropic key is never shown.",
+      "settingsPatch": "JSON with any of `store_results`, `check_registries` (booleans), `model`, `backend`, `local_model` → the same body as GET. The settings page's rules apply: in the cloud `model` must be one of `model_choices`; `backend` and `local_model` apply to a self-hosted instance only. A key may turn `store_results` off but not on (`403 SESSION_REQUIRED`, nothing applied; sending `true` while it is already on is fine): storing results is switched on in the signed-in UI only, so a leaked key cannot start keeping documents; the Anthropic key and API keys stay session-only too.",
+      "registriesSearch": "Searches the downloaded registries like the Registries page: filled fields combine (AND), name words match as prefixes, up to 50 rows per source with the true `total`. → `groups[]` (sources with results first: `source`, `loaded`, `data_date`, `fetched_at`, `total`, `name_only`, `rows`) — `name_only` marks an NBCTF row matched by name alone, with no ID, so verify it — and `skipped[]` (`source`, `missing`: the filled fields that source does not carry). Not counted as usage.",
+      "documentsList": "Paged metadata, newest first: id, timestamp, status, document type, verdict, mode, source, latency. Never document content.",
+      "documentGet": "The stored result, decrypted — only if *store results* was on for that request (404 NOT_STORED otherwise).",
+      "documentDelete": "Deletes that stored result → 204.",
+      "documentsDeleteAll": "Deletes every stored result → { \"deleted\": n }."
+    },
+    "sessionOnly": "Key management (/api/keys*), the settings page's own routes (/api/settings*, including the Anthropic key) and the registries status (/api/registries) are UI-only: they accept the browser session and answer 403 SESSION_REQUIRED to a bearer key. A key reads and changes its owner's settings through /api/v1/settings.",
+    "responseTitle": "Response shape", "responseItems": ["Dates are ISO everywhere; `date_of_expiry` of a disability_card is an ISO month (`2031-03`).", "`validation.overall`: verified / partial / unverified / mismatch. Documents without an MRZ (old laminated cards, the disability card) are unverified by design.", "`document_type`: teudat_zehut, teudat_zehut_back, teudat_zehut_sefach, israeli_passport, foreign_passport, israeli_drivers_license, cheque, cheque_back, senior_citizen_card, disability_card, weapon_license, unreadable, not_a_document.", "A foreign_passport carries Latin names, passport number, nationality, sex and dates — no Hebrew names, no Israeli ID number. A disability_card carries names in both scripts, id_number, file_number and date_of_expiry.", "senior_citizen_card and weapon_license are read with the generic schema: best effort, with a warning.", "`not_a_document` (HTTP 200, `fields: {}`): no supported document on the page; `regions[]` lists what was seen as `skipped`. `other` appears in `regions[]` only.", "Several documents on one page: one document and its companions (card + sefach, cheque front + back) are read, the rest is `skipped`.", "`regions[]`: one entry per document found — `bbox_2d` is `[x1, y1, x2, y2]` in the range 0–1000 of the page's width and height (for a PDF, of the engine's own render), beside that region's type and its estimated resolution (`dpi`).", "`sefach` carries the appendix sheet when the page held one (null otherwise), and `usage[]` the token counts of every model call, so a caller can price a request itself.", "`registries` is null unless the request's `check_registries` field, or (when absent) the owner's setting, is on. Then: every source (`id`, `loaded`, `data_date`), `matches[]`: `level` (alert/info), `source`, `by` (id/account/name), `field`, `record`.", "`registries.checked` lists the keys looked up in at least one downloaded source (id_number, spouse_id_number, child_id_number, drawer_id_number, guarantor_id_number, account, name_he, name_en); empty means nothing was looked up — not a clean result.", "Name matches are whole-word matches against NBCTF individuals — verify them. A check that could not run is `{\"error\": \"REGISTRIES_UNAVAILABLE\"}`; it never fails the extraction."],
+    "cost": {"title": "Cost figures", "text": "The Cost column and the dashboard totals are computed locally from the engine's per-call token counts at Anthropic list prices as of {date} (input, output, cache read and cache write, per model). They are an estimate: prices change and this table is updated by hand — the usage page of your Anthropic account is the bill. An Ollama document costs nothing and shows a dash."},
+    "errorsTitle": "Errors", "errorsText": "Every error carries a machine-readable code; extra fields depend on the code.",
+    "colStatus": "Status", "colCode": "Code",
+    "errors": {
+      "TOKEN_INVALID": "Unknown, malformed or revoked key.",
+      "UNAUTHENTICATED": "No credentials (cloud mode).",
+      "TRIAL_EXHAUSTED": "Free documents used up — add an Anthropic key in settings.",
+      "NO_FILE": "No `file` part in the request.",
+      "NOT_IMAGE": "The file is not an image or a PDF.",
+      "INVALID_BODY": "A field has the wrong type or value (e.g. `check_registries` is not true/false).",
+      "INVALID_MODEL": "`model` is not one of `model_choices`.",
+      "INVALID_QUERY": "A registries search needs a number, an account or two letters of a name.",
+      "RATE_LIMITED": "Over the key's request budget: 30 requests a minute on /api/v1/*, and a separate 20 for the registries search, by default. Retry after the `Retry-After` seconds (also `retry_after` in the body).",
+      "ANTHROPIC_KEY_INVALID": "Anthropic rejected the key saved in settings.",
+      "SESSION_REQUIRED": "A session-only route was called with an API key.",
+      "NOT_FOUND": "No such document for this account.",
+      "NOT_STORED": "The document exists but its result was not stored.",
+      "TOO_LARGE": "Over 30 MB.",
+      "KEY_DECRYPT_FAILED": "The server's master key changed since the value was stored.",
+      "INTERNAL": "Unexpected server error — retry later.",
+      "ENGINE_MISCONFIGURED": "The engine rejected the web app's secret (deployment error).",
+      "ENGINE_UNAVAILABLE": "The engine is unreachable.",
+      "ENGINE_TIMEOUT": "Extraction did not finish within ENGINE_TIMEOUT_MS.",
+      "ENGINE_ERROR": "The engine's own status and detail passed through — e.g. 503 with Retry-After when its queue is full, 422 when the model refused the image."
+    },
+    "snippetsTitle": "Examples",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "signature": { "madeWith": "Made with ♥ for Web", "copyright": "© {year} Makor", "terms": "Terms of Use", "privacy": "Privacy Policy", "email": "Send feedback by e-mail", "github": "View source on GitHub", "fishart": "fishart.co.il" },
+  "legal": {
+    "toc": "On this page",
+    "updated": "Last updated: {date}",
+    "terms": {
+      "title": "Terms of Use",
+      "intro": "These terms govern the Makor service on this site — the web app, its API and the document extraction behind them. Read them together with the [Privacy Policy]({privacy}).",
+      "sections": [
+        {
+          "id": "acceptance",
+          "title": "Acceptance",
+          "items": [
+            "The service is operated by the operator of this site (\"we\", \"us\"). Questions about these terms: [write to us](mailto:{email}).",
+            "By accepting an invitation, signing in, calling the API with a key or otherwise using the service, you agree to these terms and to the [Privacy Policy]({privacy}). If you do not agree, do not use the service.",
+            "If you use the service on behalf of an organisation, you confirm that you are authorised to accept these terms for it."
+          ]
+        },
+        {
+          "id": "service",
+          "title": "The service",
+          "items": [
+            "Makor reads photos and PDFs of Israeli identity documents, foreign passports and bank cheques and returns the fields it reads as structured data, with local check-digit validation and an optional check against public registries.",
+            "The service is free of charge and access is by invitation only. A limited number of documents runs on our Anthropic account; after that you may add your own Anthropic API key, and Anthropic bills you directly under its own terms. There is no payment relationship between you and us.",
+            "The source code is open under the MIT licence. A copy you install and run yourself (self-hosted) is not the service and is not covered by these terms; we have no access to it or to its data."
+          ]
+        },
+        {
+          "id": "no-warranty",
+          "title": "No warranty",
+          "items": [
+            "The service is provided *as is* and *as available*, without warranties of any kind, express or implied, including accuracy, completeness, fitness for a particular purpose, availability and non-infringement.",
+            "Extraction is performed by machine-learning models and is experimental. Models misread characters, skip or confuse fields, and can return values that look plausible but are wrong. A passed check-digit validation proves only that the numbers are consistent with each other — not that the document is genuine or that the values are correct.",
+            "Makor is not an identity verification, know-your-customer, anti-money-laundering, fraud detection or document authentication service. Its output must not be the sole basis of any legal, financial, credit, employment or other decision. Always verify the result against the original document.",
+            "Registry checks compare values with local copies of public lists (Bank of Israel restricted accounts, NBCTF designations, the Companies Registrar) as of their last download. The copies may be incomplete or out of date, a match may be a false positive, and \"not found\" does not mean that a person or entity is not listed. The checks are informational and do not replace any screening that law or regulation requires of you."
+          ]
+        },
+        {
+          "id": "responsibilities",
+          "title": "Your responsibilities",
+          "items": [
+            "You upload only documents you have a lawful right to process: your own, or other people's with their consent or another legal basis under the Privacy Protection Law, 5741-1981. You are responsible for informing those people and for your own obligations towards them.",
+            "You do not use the service for anything unlawful — including forgery, identity theft, fraud, unlawful surveillance or profiling — and do not upload material you have no right to share.",
+            "You do not attempt to break, overload, probe or circumvent the service's security, limits or access controls, and do not resell the service or offer it to others as your own.",
+            "You keep your API keys and your Anthropic key secret and are responsible for everything done with them. Revoke a key you believe has been exposed."
+          ]
+        },
+        {
+          "id": "availability",
+          "title": "Availability and changes",
+          "items": [
+            "There is no service level. The service may be unavailable, slow, changed, limited or discontinued at any time, with or without notice.",
+            "We may refuse, suspend or close any account or invitation, revoke API keys and delete data at our discretion, in particular when these terms are breached.",
+            "We may change these terms. The date at the top shows when they last changed; using the service after a change means you accept the new version."
+          ]
+        },
+        {
+          "id": "liability",
+          "title": "Limitation of liability",
+          "items": [
+            "To the fullest extent permitted by law, we are not liable for any damage arising from the use of the service or the inability to use it — direct, indirect, incidental, consequential or special — including loss of profit, data, business or reputation, and damage caused by wrong, missing or late results or by third-party services.",
+            "Where liability cannot be excluded, our total liability for all claims together is limited to 100 new shekels.",
+            "Nothing in these terms limits liability that the law does not allow to be limited, including liability for intent or gross negligence."
+          ]
+        },
+        {
+          "id": "indemnity",
+          "title": "Indemnity",
+          "items": [
+            "You will indemnify us for any claim, damage or expense, including reasonable legal fees, arising from documents you uploaded without a lawful right, from unlawful use of the service or from your breach of these terms."
+          ]
+        },
+        {
+          "id": "law",
+          "title": "Governing law",
+          "items": [
+            "These terms are governed by the laws of the State of Israel. The competent courts in Tel Aviv-Jaffa have exclusive jurisdiction.",
+            "These terms are published in Hebrew and in English; if the two differ, the Hebrew version prevails.",
+            "If a provision is held unenforceable, it applies to the extent it is enforceable and the rest of the terms remain in force."
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "intro": "This policy explains what personal data the Makor service processes, where, why, and what you can ask of us. Identity documents and cheques contain sensitive personal data, and we process it under the Israeli Privacy Protection Law, 5741-1981, as amended (Amendment 13). Use of the service is also governed by the [Terms of Use]({terms}).",
+      "sections": [
+        {
+          "id": "controller",
+          "title": "Who is responsible",
+          "items": [
+            "The service is operated by the operator of this site, who is the owner of the database described here. For any privacy matter, [write to us](mailto:{email}).",
+            "This policy covers the hosted service only. A self-hosted copy is operated by whoever installs it; with a local model its data never reaches us or any third party."
+          ]
+        },
+        {
+          "id": "location",
+          "title": "Where data is kept",
+          "items": [
+            "The service, its database and its logs run on servers in Israel, hosted by Kamatera.",
+            "Reading the documents and signing in are performed by providers abroad — see *Transfers abroad* below."
+          ]
+        },
+        {
+          "id": "documents",
+          "title": "Uploaded documents",
+          "items": [
+            "An uploaded image or PDF is used only to extract its fields. It is not stored: it is held in memory while the request runs and discarded when the result is returned. An upload larger than 1 MB is buffered in a temporary file on the server for the duration of the request and deleted when the request ends.",
+            "The image, its file name and its size are never recorded, and uploads are never logged.",
+            "Extracted values are returned to you. They are saved only if you turn on *Store extraction results* in the settings; the full result is then kept encrypted until you delete it — one document at a time or all at once.",
+            "Documents contain data of special sensitivity, such as identity numbers, dates of birth and bank accounts. When you upload someone else's document, you are responsible for having a lawful basis to do so (see the [Terms of Use]({terms}))."
+          ]
+        },
+        {
+          "id": "stored",
+          "title": "What we store",
+          "items": [
+            "*Account*: your e-mail address, an internal user id, your role, the time you signed up and were last seen; invitation records (the invited address, who sent the invitation, dates and status).",
+            "*Per document*: time, status, document type, validation verdict, whether a sefach was present, mode (trial or own key), source (web or API), the API key used, engine and model, token counts, processing time, estimated cost, an error code, and a registry summary that names the lists that matched and how many times — without any values.",
+            "*Settings*: your preferences, and your Anthropic API key, encrypted, if you add one.",
+            "*API keys*: a SHA-256 hash, the first 8 characters, the key's name and when it was created, last used and revoked. The key itself is shown once and never stored."
+          ]
+        },
+        {
+          "id": "purposes",
+          "title": "Why",
+          "items": [
+            "To provide the service: to sign you in, run extractions, enforce the trial and rate limits, show you your history and costs, and protect the service against abuse.",
+            "We do not sell your data, do not use it for advertising or profiling, do not train models on it, and share it with no one except the providers named below."
+          ]
+        },
+        {
+          "id": "transfers",
+          "title": "Transfers abroad",
+          "items": [
+            "*Anthropic (United States)* reads the documents: the image, or parts of it, is sent to the Anthropic API for extraction, on our account or on your own key. Under Anthropic's [commercial terms](https://www.anthropic.com/legal/commercial-terms), it does not train models on this data, and it deletes API inputs and outputs within 30 days, except where it must keep them longer to enforce its usage policy or to comply with the law.",
+            "*Clerk (United States)* runs sign-in: your e-mail address, sign-in sessions and invitation e-mails are handled by Clerk under its [privacy policy](https://clerk.com/legal/privacy), and may be stored in the United States or other countries.",
+            "By using the hosted service you consent to these transfers, under the Privacy Protection (Transfer of Data to Databases Abroad) Regulations, 5761-2001. If you do not consent, do not use the hosted service — the self-hosted variant with a local model keeps everything on your own machine."
+          ]
+        },
+        {
+          "id": "registries",
+          "title": "Registry checks",
+          "items": [
+            "Public registries are downloaded to the server in Israel, and documents are checked against them there. No extracted value, name or number is sent to any registry or third party, and searches are not logged."
+          ]
+        },
+        {
+          "id": "logs",
+          "title": "Logs",
+          "items": [
+            "The extraction engine logs counts and timings — image dimensions, token counts, durations — never images, prompts or extracted values. The web app logs internal ids when an error occurs. The reverse proxy keeps no access log."
+          ]
+        },
+        {
+          "id": "cookies",
+          "title": "Cookies and browser storage",
+          "items": [
+            "Only what the service needs to work: Clerk's sign-in session cookies, `NEXT_LOCALE` (your language), `sidebar_state` (the app's sidebar) and `theme` in local storage. There are no analytics, tracking or advertising cookies."
+          ]
+        },
+        {
+          "id": "retention",
+          "title": "Retention",
+          "items": [
+            "Stored results are kept until you delete them or the account is deleted. The account, its document records and settings are kept for as long as the account exists. A revoked API key remains as a record. A temporary upload file exists only until its request ends.",
+            "When an account is deleted, its document records, stored results, API keys and settings are deleted with it; the invitation record (address and dates) is kept as the record of the access that was granted."
+          ]
+        },
+        {
+          "id": "rights",
+          "title": "Your rights",
+          "items": [
+            "You may ask to see the personal data we hold about you, to correct it or to delete it — including your account and all its document records — under sections 13 and 14 of the Privacy Protection Law. [Send us the request by e-mail](mailto:{email}); we answer within 30 days.",
+            "You can delete stored results and remove your Anthropic key yourself at any time in the settings.",
+            "If you believe your data has been mishandled, you may file a complaint with the Privacy Protection Authority."
+          ]
+        },
+        {
+          "id": "security",
+          "title": "Security",
+          "items": [
+            "Connections are HTTPS only. Stored results and Anthropic keys are encrypted at rest with AES-256-GCM, API keys are kept only as hashes, and accounts are by invitation.",
+            "No system is perfectly secure. If a security incident affects your data, we will act as the law requires, including notifying the Privacy Protection Authority and, where required, you."
+          ]
+        },
+        {
+          "id": "changes",
+          "title": "Changes",
+          "items": [
+            "We may update this policy. The date at the top shows when it last changed; using the service after a change means you accept the new version."
+          ]
+        }
+      ]
+    }
+  },
+  "access": { "inviteConsent": "By accepting the invitation you agree to the <terms>Terms of Use</terms> and the <privacy>Privacy Policy</privacy>, including the transfer of documents to Anthropic and of your sign-in to Clerk in the United States.", "noAccessTitle": "Access is by invitation", "noAccessBody": "Makor accounts are by invitation, and <addr>{email}</addr> has not been invited.", "noAccessBodyUnknown": "Makor accounts are by invitation, and this account has not been invited.", "noAccessHint": "Ask for access and an admin will send an invitation to your address. Invited under another address? Sign out and open the link from the e-mail again.", "requestAccess": "Request access", "signOut": "Sign out", "inviteTitle": "Accept your invitation", "inviteLead": "Create your Makor account with the address the invitation was sent to." },
+  "meta": {
+    "title": "Makor — OCR API for Israeli ID documents and cheques",
+    "description": "Teudat zehut, passports, driver's licenses and cheques into structured JSON: Hebrew and Latin fields, MRZ and MICR check digits verified locally, one API call.",
+    "ogAlt": "Makor: documents in, JSON out",
+    "keywords": "OCR, teudat zehut OCR, Israeli ID card OCR, passport MRZ, cheque OCR, MICR, Hebrew OCR, KYC, document extraction API",
+    "apiReference": {
+      "title": "API reference",
+      "description": "The Makor extraction API: authentication, request limits, the extract, usage, settings and registry search endpoints, and the JSON response shape."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "What Makor does with personal data: images are read in memory and never stored, servers are in Israel, and what is sent to Anthropic and Clerk."
+    },
+    "terms": {
+      "title": "Terms of Use",
+      "description": "The terms for using Makor, the OCR service for Israeli identity documents and bank cheques."
+    }
+  }
+}

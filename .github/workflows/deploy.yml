@@ -1,0 +1,160 @@
+# Tests on every pull request and push to main. A published release (not a pre-release) runs
+# the tests again on its tag, pushes the two images to GHCR tagged with the release (v1.2.0) and
+# the commit, and the production server pulls them. The server builds nothing: it keeps its own
+# .env (secrets never leave it) and receives only docker-compose.yml, the Caddyfile and the
+# release to run. Redeploy or roll back: Actions → "Test and deploy" → Run workflow on a tag.
+#
+# Repository secrets: DEPLOY_HOST (the server's address), DEPLOY_SSH_KEY (private key of the
+# server's `deploy` user), DEPLOY_KNOWN_HOSTS (`ssh-keyscan -t ed25519 <host>`, pinned so a
+# swapped host is refused). Repository variable: MAKOR_DOMAIN (the smoke check's hostname).
+
+name: Test and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  release:
+    types: [published]
+  # On a tag only (the images job checks): redeploys that release, e.g. to roll back.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  engine:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: engine/requirements*.txt
+      # Two steps on purpose, as in the Dockerfile: rapidocr declares opencv-python, the engine uses headless.
+      - run: pip install -r requirements-dev.txt && pip install --no-deps rapidocr-onnxruntime==1.2.3
+      - run: pytest tests/ -q
+      - run: ruff check .
+
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020  # v7.0.0
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: npm run lint
+      - run: npm run typecheck
+      # `next build` runs inside the image build below, so a broken build stops the deploy there.
+
+  images:
+    if: >-
+      (github.event_name == 'release' && !github.event.release.prerelease) ||
+      (github.event_name == 'workflow_dispatch' && github.ref_type == 'tag')
+    needs: [engine, web]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        service: [engine, web]
+    steps:
+      - name: Release tag is a valid image tag
+        # The tag names the images and is written into the server's .env over SSH, so nothing
+        # but Docker's tag alphabet may pass.
+        env:
+          TAG: ${{ github.ref_name }}
+        run: '[[ "$TAG" =~ ^[A-Za-z0-9_][A-Za-z0-9_.-]{0,127}$ ]] || { echo "unusable release tag: $TAG"; exit 1; }'
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e  # v4.3.0
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f  # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a  # v7.3.0
+        with:
+          context: ./${{ matrix.service }}
+          platforms: linux/amd64
+          push: true
+          # `latest` follows new releases only: redeploying an older tag must not move it back.
+          tags: |
+            ghcr.io/yanfishel/makor-${{ matrix.service }}:${{ github.ref_name }}
+            ghcr.io/yanfishel/makor-${{ matrix.service }}:${{ github.sha }}
+            ${{ github.event_name == 'release' && format('ghcr.io/yanfishel/makor-{0}:latest', matrix.service) || '' }}
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}
+
+  deploy:
+    needs: images
+    runs-on: ubuntu-latest
+    # The DEPLOY_* secrets belong to this environment, which deploys only from v* tags and waits
+    # for the owner's approval: a token that can publish a release still cannot reach the server.
+    environment: production
+    # One deploy at a time; a newer release waits instead of racing the running one.
+    concurrency:
+      group: production
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      packages: read
+    env:
+      TARGET: deploy@${{ secrets.DEPLOY_HOST }}
+      TAG: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+
+      - name: SSH key
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519 && chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      - name: Compose file and Caddyfile
+        # `cat >` rewrites in place: Caddy bind-mounts the single file, and a replaced inode
+        # would leave the container reading the old one.
+        run: |
+          ssh "$TARGET" 'mkdir -p /srv/makor/deploy'
+          ssh "$TARGET" 'cat > /srv/makor/docker-compose.yml' < docker-compose.yml
+          ssh "$TARGET" 'cat > /srv/makor/deploy/Caddyfile' < deploy/Caddyfile
+
+      - name: Pull and restart
+        # The job's GITHUB_TOKEN logs the server in for this pull only and expires with the job,
+        # so no registry credential lives on the server.
+        run: |
+          printf '%s\n' "${{ secrets.GITHUB_TOKEN }}" | ssh "$TARGET" "
+            set -e
+            cd /srv/makor
+            [ -z \"\$(tail -c1 .env)\" ] || echo >> .env
+            if grep -q '^MAKOR_TAG=' .env; then sed -i 's/^MAKOR_TAG=.*/MAKOR_TAG=$TAG/' .env; else echo 'MAKOR_TAG=$TAG' >> .env; fi
+            docker login ghcr.io -u '${{ github.actor }}' --password-stdin
+            trap 'docker logout ghcr.io >/dev/null' EXIT
+            docker compose pull
+            docker compose up -d --no-build --remove-orphans
+            docker compose exec -T caddy caddy reload --config /etc/caddy/Caddyfile
+            docker image prune -af >/dev/null
+            docker compose ps
+          "
+
+      - name: Smoke check
+        # 401 = web is up behind Caddy with a valid certificate and answers the API unauthenticated.
+        run: |
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://${{ vars.MAKOR_DOMAIN }}/api/v1/usage" || true)
+            echo "attempt $i: $code"
+            [ "$code" = 401 ] && exit 0
+            sleep 10
+          done
+          exit 1

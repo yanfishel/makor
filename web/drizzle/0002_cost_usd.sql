@@ -1,0 +1,1 @@
+ALTER TABLE `documents` ADD `cost_usd` real;

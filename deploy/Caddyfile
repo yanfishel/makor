@@ -1,0 +1,24 @@
+# Reverse proxy in front of the web app (the engine is never exposed): automatic HTTPS (Let's Encrypt) for
+# MAKOR_DOMAIN, upload cap matching MAX_UPLOAD_BYTES, no access log — Caddy
+# would only log paths and headers, never bodies, but the fewer traces of
+# document uploads the better.
+
+{$MAKOR_DOMAIN} {
+	request_body {
+		max_size 32MB
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		-Server
+	}
+
+	# The extract page streams NDJSON events (application/x-ndjson): a buffered response
+	# would sit blank for the whole extraction and then show everything at once, exactly
+	# the failure this feature exists to remove. flush_interval -1 flushes every write
+	# immediately instead of waiting to fill a buffer.
+	reverse_proxy web:3000 {
+		flush_interval -1
+	}
+}

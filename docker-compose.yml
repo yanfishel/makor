@@ -1,0 +1,99 @@
+# Makor production stack: Caddy (HTTPS, the only published ports) → web (Next.js:
+# accounts, SQLite, public API) → engine (stateless extraction, compose network only).
+#
+#   Cloud, Claude API backend, any small server:    docker compose up -d --build
+#   The production server pulls CI-built images instead (.github/workflows/deploy.yml):
+#                                                   docker compose pull && docker compose up -d --no-build
+#   Self-host with local Ollama on an NVIDIA host:  AUTH_MODE=none MAKOR_BACKEND=ollama docker compose --profile ollama up -d --build
+#                                                   docker compose exec ollama ollama pull qwen3-vl:8b-instruct   # once
+#
+# Settings come from .env — copy .env.example and fill in what the comments there say.
+
+# The project name is pinned, so the volumes are makor_* whatever the checkout's directory is called.
+name: makor
+
+services:
+  engine:
+    # `image` names what CI pushes to GHCR and what a local --build tags; MAKOR_TAG is the release
+    # (v1.2.0) the deploy workflow writes into the server's .env.
+    image: ghcr.io/yanfishel/makor-engine:${MAKOR_TAG:-latest}
+    build: ./engine
+    restart: unless-stopped
+    environment:
+      MAKOR_ENV: prod
+      MAKOR_ENGINE_SECRET: ${MAKOR_ENGINE_SECRET:?set MAKOR_ENGINE_SECRET in .env (openssl rand -hex 32)}
+      MAKOR_BACKEND: ${MAKOR_BACKEND:-anthropic}
+      MAKOR_MODEL: ${MAKOR_MODEL:-}
+      MAKOR_CLASSIFY: ${MAKOR_CLASSIFY:-}
+      MAKOR_CLASSIFIER_MODEL: ${MAKOR_CLASSIFIER_MODEL:-}
+      # `-` not `:-`: an empty value is meaningful here (send no effort, the API default).
+      MAKOR_CLASSIFY_EFFORT: ${MAKOR_CLASSIFY_EFFORT-low}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      MAKOR_OLLAMA_URL: ${MAKOR_OLLAMA_URL:-http://ollama:11434}
+      # The per-request keep_alive the engine sends overrides Ollama's own setting: with a
+      # GPU paid for around the clock, never unload the model.
+      MAKOR_OLLAMA_KEEP_ALIVE: "-1"
+    expose:
+      - "8000"
+
+  web:
+    image: ghcr.io/yanfishel/makor-web:${MAKOR_TAG:-latest}
+    build: ./web
+    restart: unless-stopped
+    environment:
+      AUTH_MODE: ${AUTH_MODE:-clerk}
+      ENGINE_URL: http://engine:8000
+      ENGINE_SECRET: ${MAKOR_ENGINE_SECRET}
+      ENGINE_TIMEOUT_MS: ${ENGINE_TIMEOUT_MS:-600000}
+      DATA_DIR: /srv/data
+      MAKOR_MASTER_KEY: ${MAKOR_MASTER_KEY:-}
+      TRIAL_DOCS: ${TRIAL_DOCS:-5}
+      API_RATE_LIMIT_PER_MIN: ${API_RATE_LIMIT_PER_MIN:-30}
+      API_SEARCH_RATE_LIMIT_PER_MIN: ${API_SEARCH_RATE_LIMIT_PER_MIN:-20}
+      # `-` not `:-`: set but empty in .env turns the daily refresh off; unset keeps 03:30.
+      MAKOR_REGISTRIES_REFRESH_AT: ${MAKOR_REGISTRIES_REFRESH_AT-03:30}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://${MAKOR_DOMAIN:-localhost}}
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${CLERK_PUBLISHABLE_KEY:-}
+      CLERK_SECRET_KEY: ${CLERK_SECRET_KEY:-}
+      MAKOR_ADMIN_EMAIL: ${MAKOR_ADMIN_EMAIL:-}
+    volumes:
+      - web_data:/srv/data
+    expose:
+      - "3000"
+    depends_on:
+      - engine
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      MAKOR_DOMAIN: ${MAKOR_DOMAIN:?set MAKOR_DOMAIN in .env}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - web
+
+  ollama:
+    image: ollama/ollama
+    profiles: ["ollama"]
+    restart: unless-stopped
+    volumes:
+      - ollama_models:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  web_data:
+  caddy_data:
+  caddy_config:
+  ollama_models:

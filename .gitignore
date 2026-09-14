@@ -1,0 +1,33 @@
+.env
+.env.*
+!.env.example
+*.log
+coverage/
+.venv
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+samples
+data/
+
+.idea
+# subagent-driven-development scratch (ledger, briefs, review packages)
+.superpowers/
+# Plans and specs from the development workflow stay local.
+docs/superpowers/
+
+# Claude Code worktrees
+.claude/
+
+engine/data/
+web/node_modules/
+web/.next/
+web/data/
+web/*.tsbuildinfo
+web/test-results/
+web/playwright-report/
+web/e2e/screens/
+
+# git worktrees created by the SDD workflow
+.worktrees/

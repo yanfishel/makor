@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 330" width="1200" height="330" role="img" aria-label="Makor deployment: Caddy, the web app and the engine, with Ollama or the Anthropic API">
+<style>
+  .t{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;fill:#1f2328} .m{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;fill:#59636e}
+  .h{font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;font-weight:600;fill:#1f2328} .n{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;fill:#0f7a96;font-weight:600}
+  .c{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;font-size:11px;fill:#0f7a96} .cu{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;font-size:11px;fill:#1f2328}
+  .lane{font-family:ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;font-size:11px;letter-spacing:.12em;fill:#59636e;font-weight:600}
+</style>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8c959f"/></marker></defs>
+<rect width="1200" height="330" rx="16" fill="#f6f8fa"/>
+<rect x="200" y="20" width="770" height="290" rx="12" fill="#eef1f4" stroke="#d0d7de" stroke-dasharray="5 4"/>
+<text x="216" y="44" class="lane">DOCKER COMPOSE · ONE .ENV</text>
+<rect x="24" y="100" width="150" height="100" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+<text x="38" y="126" class="h" font-size="15">Clients</text>
+<text x="38" y="148" class="m" font-size="12.5" xml:space="preserve">browser</text>
+<text x="38" y="166" class="m" font-size="12.5" xml:space="preserve">API key (Bearer)</text>
+<rect x="216" y="100" width="150" height="100" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+<text x="230" y="126" class="h" font-size="15">caddy</text>
+<text x="230" y="148" class="m" font-size="12.5" xml:space="preserve">HTTPS for</text>
+<text x="230" y="166" class="m" font-size="12.5" xml:space="preserve">MAKOR_DOMAIN</text>
+<text x="230" y="184" class="m" font-size="12.5" xml:space="preserve">80 / 443 only</text>
+<rect x="392" y="62" width="290" height="236" rx="10" fill="#ffffff" stroke="#0f7a96" stroke-width="1.5"/>
+<text x="406" y="88" class="h" font-size="15">web · Next.js</text>
+<text x="406" y="110" class="m" font-size="12.5" xml:space="preserve">accounts, API keys, the public /api/v1</text>
+<text x="406" y="128" class="m" font-size="12.5" xml:space="preserve">SQLite on a volume:</text>
+<text x="406" y="146" class="m" font-size="12.5" xml:space="preserve">· makor.sqlite3 — metadata, keys,</text>
+<text x="406" y="164" class="m" font-size="12.5" xml:space="preserve">  encrypted results</text>
+<text x="406" y="182" class="m" font-size="12.5" xml:space="preserve">· registries.sqlite3 — public lists</text>
+<rect x="406.0" y="204" width="72.3" height="18" rx="4" fill="#e3f3f7" stroke="#0f7a96" stroke-width="1"/>
+<text x="412.0" y="217" class="c">AUTH_MODE</text>
+<rect x="484.3" y="204" width="119.2" height="18" rx="4" fill="#e3f3f7" stroke="#0f7a96" stroke-width="1"/>
+<text x="490.3" y="217" class="c">MAKOR_MASTER_KEY</text>
+<rect x="708" y="62" width="246" height="236" rx="10" fill="#ffffff" stroke="#0f7a96" stroke-width="1.5"/>
+<text x="722" y="88" class="h" font-size="15">engine · FastAPI</text>
+<text x="722" y="110" class="m" font-size="12.5" xml:space="preserve">stateless extraction in memory,</text>
+<text x="722" y="128" class="m" font-size="12.5" xml:space="preserve">never on disk; reachable on the</text>
+<text x="722" y="146" class="m" font-size="12.5" xml:space="preserve">compose network only</text>
+<rect x="722.0" y="168" width="139.3" height="18" rx="4" fill="#e3f3f7" stroke="#0f7a96" stroke-width="1"/>
+<text x="728.0" y="181" class="c">MAKOR_ENGINE_SECRET</text>
+<rect x="722.0" y="192" width="99.1" height="18" rx="4" fill="#e3f3f7" stroke="#0f7a96" stroke-width="1"/>
+<text x="728.0" y="205" class="c">MAKOR_BACKEND</text>
+<rect x="827.1" y="192" width="85.7" height="18" rx="4" fill="#e3f3f7" stroke="#0f7a96" stroke-width="1"/>
+<text x="833.1" y="205" class="c">MAKOR_MODEL</text>
+<rect x="996" y="62" width="180" height="108" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+<text x="1010" y="88" class="h" font-size="15">Ollama</text>
+<text x="1010" y="110" class="m" font-size="12.5" xml:space="preserve">Qwen3-VL on your GPU</text>
+<text x="1010" y="128" class="m" font-size="12.5" xml:space="preserve">profile: ollama</text>
+<rect x="996" y="190" width="180" height="108" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+<text x="1010" y="216" class="h" font-size="15">Anthropic API</text>
+<text x="1010" y="238" class="m" font-size="12.5" xml:space="preserve">Claude · service key</text>
+<text x="1010" y="256" class="m" font-size="12.5" xml:space="preserve">or the user&#x27;s own</text>
+<rect x="24" y="232" width="150" height="66" rx="10" fill="#ffffff" stroke="#d0d7de" stroke-width="1"/>
+<text x="38" y="258" class="h" font-size="15">Clerk</text>
+<text x="38" y="280" class="m" font-size="12.5" xml:space="preserve">sign-in (clerk mode)</text>
+<path d="M174,150 L213,150" fill="none" stroke="#8c959f" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M366,150 L389,150" fill="none" stroke="#8c959f" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M682,150 L705,150" fill="none" stroke="#8c959f" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M954,116 L993,116" fill="none" stroke="#8c959f" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M954,244 L993,244" fill="none" stroke="#8c959f" stroke-width="1.6" stroke-linejoin="round" marker-end="url(#ah)"/>
+<path d="M174,265 L300,265 L300,290 L389,290" fill="none" stroke="#8c959f" stroke-width="1.4" stroke-dasharray="4 3"/>
+</svg>
