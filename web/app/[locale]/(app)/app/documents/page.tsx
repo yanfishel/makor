@@ -1,12 +1,10 @@
-import { ScanText } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { DocumentsFilters } from "@/components/DocumentsFilters";
 import { DocumentsTable } from "@/components/DocumentsTable";
 import { EmptyState } from "@/components/EmptyState";
 import { PageHeader } from "@/components/PageHeader";
 import { Pagination } from "@/components/Pagination";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/routing";
+import { ExtractCta } from "@/components/app/ExtractCta";
 import { currentUser } from "@/lib/current-user";
 import { getDb } from "@/lib/db";
 import { filtersHref, parseFilters } from "@/lib/document-filters";
@@ -22,6 +20,7 @@ export default async function DocumentsPage({ params, searchParams }: { params: 
   const filters = parseFilters(query);
   const t = await getTranslations("documents");
   const td = await getTranslations("dashboard");
+  const ta = await getTranslations("app");
   const { userId } = await currentUser();
   const db = getDb();
   const facets = documentFacets(db, userId);
@@ -29,7 +28,7 @@ export default async function DocumentsPage({ params, searchParams }: { params: 
   const page = clampPage(parsePage(query.page), total);
   const { items } = listDocuments(db, userId, { limit: PAGE_SIZE, offset: (page - 1) * PAGE_SIZE, filters });
   const active = Object.values(filters).some(Boolean);
-  const cta = <Button asChild variant="highlight"><Link href="/app/extract"><ScanText />{td("extractCta")}</Link></Button>;
+  const cta = <ExtractCta label={td("extractCta")} short={ta("extract")} />;
   return (
     <div className="space-y-6">
       <PageHeader title={t("title")} description={t("intro")} actions={cta} />

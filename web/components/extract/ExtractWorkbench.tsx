@@ -122,11 +122,12 @@ export function ExtractWorkbench({ choice }: { choice: EngineChoice }) {
       </div>
       <p className="font-medium">{t("drop")}</p>
       <p className="max-w-md text-[13px] text-muted-foreground">{t("intro")}</p>
-      <p className="max-w-md text-[13px] text-muted-foreground">{t("hint")}</p>
       <Button type="button" variant="outline">{t("choose")}</Button>
       <input ref={input} type="file" accept="image/*,application/pdf" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) void submit(f); }} />
     </div>
   );
+  // The resolution guidance sits under the frame, not in it: inside, it pushed "Choose file" below the fold on a phone.
+  const hint = <p className="mx-auto max-w-md text-center text-[13px] text-muted-foreground">{t("hint")}</p>;
 
   const another = file && !preStreamError
     ? <Button type="button" variant="outline" onClick={reset} disabled={busy}><RotateCcw />{t("reset")}</Button>
@@ -137,7 +138,7 @@ export function ExtractWorkbench({ choice }: { choice: EngineChoice }) {
           and a document already read names the one that actually ran. */}
       <PageHeader title={t("heading")} actions={another}
         description={<EngineLine choice={state.result ? parseEngineModel(state.result.model) : choice} />} />
-      {(!file || preStreamError) && dropzone}
+      {(!file || preStreamError) && <div className="space-y-3">{dropzone}{hint}</div>}
       {error && (
         <Alert variant="destructive">
           <AlertTitle>{error}</AlertTitle>

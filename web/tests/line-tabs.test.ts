@@ -13,9 +13,12 @@ const render = () =>
 describe("LineTabs", () => {
   it("draws one full-width rule under the list and one highlight indicator under the active tab", () => {
     const html = render();
-    expect(html).toMatch(/data-slot="tabs-list"[^>]*class="[^"]*w-full[^"]*border-b/);
+    expect(html).toMatch(/data-slot="tabs-list"[^>]*class="[^"]*min-w-full[^"]*border-b/);
     expect((html.match(/data-slot="line-tab-indicator"/g) ?? []).length).toBe(1);
     expect(html).toMatch(/data-state="active"[^>]*>B<span[^>]*data-slot="line-tab-indicator"[^>]*class="[^"]*bg-highlight/);
+  });
+  it("scrolls the strip sideways in its own wrapper when the tabs are wider than the column", () => {
+    expect(render()).toMatch(/data-slot="line-tabs-scroller"[^>]*class="[^"]*overflow-x-auto[^"]*"[^>]*><div[^>]*data-slot="tabs-list"[^>]*class="[^"]*w-max/);
   });
   it("gives every trigger horizontal padding and no box border, and shows only the active content", () => {
     const html = render();
