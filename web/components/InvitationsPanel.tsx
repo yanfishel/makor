@@ -78,7 +78,7 @@ export function InvitationsPanel({ locale }: { locale: string }) {
                       {(r.status === "pending" || r.status === "expired") && (
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild><Button variant="ghost" size="icon-sm" disabled={busy} aria-label={t("actions")}><MoreHorizontal /></Button></DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
+                          <DropdownMenuContent align="end" className="w-auto whitespace-nowrap">
                             <DropdownMenuItem onClick={() => resend(r)}><RotateCw />{t("resend")}</DropdownMenuItem>
                             {r.status === "pending" && <DropdownMenuItem variant="destructive" onClick={() => setRevoking(r)}><Undo2 />{t("revoke")}</DropdownMenuItem>}
                           </DropdownMenuContent>
