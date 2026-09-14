@@ -325,8 +325,10 @@ Document photos are sensitive personal data (Israeli Privacy Protection Law, Ame
 
 - **Every change, however small, goes on a new branch and reaches `main` through a pull request**
   on `yanfishel/makor` — never commit, merge or push to `main` locally. Run the checks before
-  pushing the branch; merge the PR (`gh pr merge`) only once its checks (`deploy.yml`'s engine and
-  web jobs) pass, then delete the branch and pull `main`. Claude reviews a PR only on request: the
+  pushing the branch; merge the PR (`gh pr merge --squash --delete-branch`) once its checks
+  (`deploy.yml`'s `engine` and `web` jobs) pass, then pull `main`. The `main` ruleset enforces it
+  with no bypass, the owner included: a direct push is refused, a PR merges only with both checks
+  green on a branch that is up to date with `main`, and `main` cannot be force-pushed or deleted. Claude reviews a PR only on request: the
   `claude-review` label (`gh pr edit <n> --add-label claude-review`). Issues, pull requests and
   comments are open to the maintainer only; the Claude workflows start only for the owner's events. **A published release deploys to production**
   (`.github/workflows/deploy.yml`), after the owner approves the `production` environment; the
