@@ -17,7 +17,7 @@ function Chips({ accent, items }: { accent: string; items: readonly string[] }) 
 
 export function RegistriesSection({ m }: { m: LandingMessages["registries"] }) {
   return (
-    <section id="registries" className="space-y-6">
+    <section id="registries" className="scroll-mt-14 space-y-6">
       <div><h2 className="text-3xl font-semibold tracking-tight">{m.title}</h2><p className="mt-1 max-w-2xl text-muted-foreground">{m.lead}</p></div>
       <ul className="grid gap-4 border-t border-foreground pt-6 sm:grid-cols-3 sm:gap-8">
         {m.sources.map((s) => <li key={s.name} className="border-s-2 border-highlight ps-4"><div className="font-medium">{s.name}</div><div className="text-[13px] text-muted-foreground">{s.note}</div></li>)}

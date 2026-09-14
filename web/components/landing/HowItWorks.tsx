@@ -3,7 +3,7 @@ import type { LandingMessages } from "./Landing";
 
 export function HowItWorks({ m }: { m: LandingMessages["how"] }) {
   return (
-    <section id="how" className="space-y-8">
+    <section id="how" className="scroll-mt-14 space-y-8">
       <h2 className="text-3xl font-semibold tracking-tight">{m.title}</h2>
       <ol className="grid border-t border-foreground md:grid-cols-4">
         {m.steps.map((s, i) => (

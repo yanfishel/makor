@@ -8,7 +8,7 @@ export const COMPOSE_CMD = "AUTH_MODE=none MAKOR_BACKEND=ollama docker compose -
 
 export function TwoWays({ m, cloudHref, githubUrl, n, copy }: { m: LandingMessages["ways"]; cloudHref: string; githubUrl: string; n: (s: string) => string; copy: CopyLabels }) {
   return (
-    <section id="ways" className="space-y-6">
+    <section id="ways" className="scroll-mt-14 space-y-6">
       <div><h2 className="text-3xl font-semibold tracking-tight">{m.title}</h2><p className="mt-1 text-muted-foreground">{m.lead}</p></div>
       <div className="grid border-t border-foreground md:grid-cols-2">
         <div className="min-w-0 space-y-4 py-6 md:border-e md:border-border md:pe-8">

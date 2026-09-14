@@ -1,5 +1,9 @@
 export const GITHUB_URL = "https://github.com/yanfishel/makor";
 
+/** The landing's sections in page order, by their element ids: the mobile menu links to each. */
+export const LANDING_SECTIONS = ["how", "reads", "registries", "privacy", "ways", "api"] as const;
+export type LandingSection = (typeof LANDING_SECTIONS)[number];
+
 export const CONTACT_EMAIL = "yan.fishel@gmail.com";
 
 /** The subject of the "Request access" mailto — registering is by invitation, this is how to ask for one. */

@@ -103,6 +103,11 @@ over Clerk's `openUserProfile()` / `signOut()`; no `<UserButton>`). The sidebar 
 pages, Settings among them; the menu adds only the two pages outside the app — API reference
 and About — each with a trailing external-link mark. `/` sends the local build and a signed-in
 session to `/app`, so About points at `/about`: the same `LandingPage` without that redirect.
+The public header (`components/public/PublicHeader.tsx`) keeps language, theme and the account
+slot on every width; below `md` a menu sheet (from the end side) links the landing's sections
+(`LANDING_SECTIONS` in `lib/links.ts`, each section `scroll-mt-14` under the sticky header — on
+another page to `/about#…` for the same reason), the API reference, GitHub and the two legal
+pages, and below 400 px the logo narrows to its tile.
 
 Auth has no pages: Clerk modals — `SignInButton mode="modal"` in the header,
 `AuthModalOpener` on the landing when the URL carries `?sign-in=1`
