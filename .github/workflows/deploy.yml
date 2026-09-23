@@ -143,7 +143,17 @@ jobs:
             trap 'docker logout ghcr.io >/dev/null' EXIT
             docker compose pull
             docker compose up -d --no-build --remove-orphans
-            docker compose exec -T caddy caddy reload --config /etc/caddy/Caddyfile
+            # The reload is for the case compose leaves caddy running: the Caddyfile is a bind
+            # mount, so a changed file alone is not a changed container spec. When compose DOES
+            # recreate caddy the new config is already loaded and this is a no-op — but the
+            # admin endpoint it talks to is not listening the instant the container starts, and
+            # an unretried reload failed the deploy on \"dial tcp [::1]:2019: connect: connection
+            # refused\" with the release already live. Retry, then fail for real.
+            for i in \$(seq 1 30); do
+              docker compose exec -T caddy caddy reload --config /etc/caddy/Caddyfile && break
+              [ \"\$i\" = 30 ] && { echo 'caddy reload never succeeded'; exit 1; }
+              sleep 1
+            done
             docker image prune -af >/dev/null
             docker compose ps
           "
