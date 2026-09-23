@@ -1,6 +1,6 @@
 # Web app reference
 
-Detail behind the summary in `CLAUDE.md` → *Web app*. Next.js 15 App Router, TypeScript
+Detail behind the summary in `CLAUDE.md` → *Web app*. Next.js 16 App Router, TypeScript
 strict, Drizzle + better-sqlite3, next-intl en/he (`messages/`). The only public surface.
 
 ## UI system
@@ -152,8 +152,17 @@ false`) by the maintainer's decision.
 `/app*` pages in clerk mode; `/api*` is never localized or redirected. Because a middleware
 exists, Next buffers every request body so it can be cloned, 10 MB by default — a 12 MB scan
 reached the extract route truncated; `next.config.ts` sets
-`experimental.middlewareClientMaxBodySize` to 32 MB (Caddy's cap over the 30 MB limit), and
+`experimental.proxyClientMaxBodySize` to 32 MB (Caddy's cap over the 30 MB limit), and
 a config change needs the dev server restarted, it is not hot-reloaded.
+
+That same buffering is why the web app runs Next 16 and not 15: through 15.5.26 the
+Node-runtime middleware path started the swap back to the buffered body without awaiting it,
+so a request whose body was still arriving when the middleware returned reached the route
+handler on the drained original stream and Next answered `500` with `TypeError: Response
+body object should not be disturbed or locked` — before any handler code ran, so no
+`documents` row recorded it. A slow uplink made it routine and a fast one hid it. Next 16.1
+awaits the swap; no release in the 15 line does. Next 16 renames the `middleware` file
+convention to `proxy` — deprecated, not removed, and the rename is still to do.
 
 **Search and link previews** (`lib/seo.ts`). The locale layout's `generateMetadata` gives every
 page `metadataBase` = `NEXT_PUBLIC_SITE_URL` (read per request), the `%s · Makor` title

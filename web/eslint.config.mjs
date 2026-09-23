@@ -1,16 +1,19 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import coreWebVitals from "eslint-config-next/core-web-vitals";
+import typescriptConfig from "eslint-config-next/typescript";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
+// eslint-config-next 16 ships flat configs directly; the FlatCompat shim earlier versions
+// needed cannot load them (it tries to JSON-stringify the plugin objects and hits a cycle).
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...coreWebVitals,
+  ...typescriptConfig,
+  {
+    // New in eslint-plugin-react-hooks 7, which arrived with eslint-config-next 16. It fires on
+    // twelve deliberate mount-time patterns across nine client components (the UTC-then-local
+    // timestamp, the media-query hook, the elapsed clock, the panels' first fetch): each needs
+    // its own rewrite and its own check in a browser, which does not belong in a framework
+    // upgrade. Off until they are rewritten, rather than twelve suppressions in the components.
+    rules: { "react-hooks/set-state-in-effect": "off" },
+  },
   {
     ignores: [
       "node_modules/**",

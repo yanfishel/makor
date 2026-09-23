@@ -15,5 +15,6 @@ export function docIcon(type: string | null | undefined): LucideIcon {
 
 export function DocIcon({ type, className }: { type: string | null | undefined; className?: string }) {
   const Icon = docIcon(type);
+  // eslint-disable-next-line react-hooks/static-components -- picked out of the ICONS table, not created here: the identity is stable per type
   return <Icon className={className} aria-hidden />;
 }
