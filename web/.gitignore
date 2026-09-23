@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# next dev writes these on every run (generate-agent-files.js): a pointer to Next 16's own
+# docs for agents. The repository's instructions are the root CLAUDE.md and docs/, so they
+# stay out of the tree rather than adding a second, generated instruction file under web/.
+AGENTS.md
+CLAUDE.md

@@ -180,7 +180,7 @@ Invariants (reasoning and thresholds in `docs/engine-pipeline.md`):
 
 ## Web app (`web/`)
 
-Next.js 15 App Router, TypeScript strict, Drizzle + better-sqlite3, next-intl en/he. The only
+Next.js 16 App Router, TypeScript strict, Drizzle + better-sqlite3, next-intl en/he. The only
 public surface; detail in `docs/web-app.md`.
 
 - **Every API route is a pure `handleX(request, deps)` (`handleX(request, id, deps)` with a path

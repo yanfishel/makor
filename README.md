@@ -15,7 +15,7 @@ Hebrew and Latin fields, check digits verified locally, one API call.
 [![License: MIT](https://img.shields.io/badge/license-MIT-0f7a96?labelColor=0f1932)](LICENSE)
 [![Python 3.14](https://img.shields.io/badge/python-3.14-0f7a96?logo=python&logoColor=white&labelColor=0f1932)](engine/)
 [![FastAPI](https://img.shields.io/badge/engine-FastAPI-0f7a96?logo=fastapi&logoColor=white&labelColor=0f1932)](engine/)
-[![Next.js 15](https://img.shields.io/badge/web-Next.js%2015-0f7a96?logo=nextdotjs&logoColor=white&labelColor=0f1932)](web/)
+[![Next.js 16](https://img.shields.io/badge/web-Next.js%2016-0f7a96?logo=nextdotjs&logoColor=white&labelColor=0f1932)](web/)
 [![Claude](https://img.shields.io/badge/cloud-Claude-0f7a96?logo=anthropic&logoColor=white&labelColor=0f1932)](#backends-and-models)
 [![Ollama](https://img.shields.io/badge/local-Qwen3--VL%20on%20Ollama-0f7a96?logo=ollama&logoColor=white&labelColor=0f1932)](#local-models)
 [![Hebrew · English](https://img.shields.io/badge/UI-Hebrew%20%C2%B7%20English-0f7a96?labelColor=0f1932)](web/messages/)

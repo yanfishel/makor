@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils";
 export type DocsMessages = (typeof en)["docs"];
 
 const METHOD_CLASS: Record<string, string> = { GET: "border-success/25 bg-success/10 text-success", POST: "border-highlight/30 bg-highlight/10 text-highlight", PATCH: "border-warning/25 bg-warning/10 text-warning", DELETE: "border-destructive/25 bg-destructive/10 text-destructive" };
+const H2 = ({ id, children }: { id: string; children: string }) => <h2 id={id} className="scroll-mt-20 text-xl font-semibold tracking-tight">{children}</h2>;
+const H3 = ({ id, children }: { id?: string; children: string }) => <h3 id={id} className="scroll-mt-20 text-base font-medium">{children}</h3>;
 const Method = ({ m }: { m: string }) => <Badge variant="outline" className={cn("rounded-sm font-mono", METHOD_CLASS[m])}>{m}</Badge>;
 
 export function ApiDocs({ m, siteUrl }: { m: DocsMessages; siteUrl: string }) {
@@ -24,8 +26,6 @@ export function ApiDocs({ m, siteUrl }: { m: DocsMessages; siteUrl: string }) {
     ...ENDPOINT_GROUPS.map((g) => ({ id: `endpoints-${g}`, label: m.endpointGroups[g], sub: true })),
     { id: "limits", label: m.limits.title }, { id: "response", label: m.responseTitle }, { id: "cost", label: m.cost.title }, { id: "errors", label: m.errorsTitle }, { id: "snippets", label: m.snippetsTitle },
   ];
-  const H2 = ({ id, children }: { id: string; children: string }) => <h2 id={id} className="scroll-mt-20 text-xl font-semibold tracking-tight">{children}</h2>;
-  const H3 = ({ id, children }: { id?: string; children: string }) => <h3 id={id} className="scroll-mt-20 text-base font-medium">{children}</h3>;
   const examples = [["extract", s.extract], ["search", s.search], ["settings", s.settings]] as const;
   return (
     <div className="grid gap-10 lg:grid-cols-[13rem_1fr]">

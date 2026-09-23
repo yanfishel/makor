@@ -169,6 +169,7 @@ export function DocumentScene({ src, file = null, state, hoverIndex, onHover, cl
       </div>
       <div ref={bed} tabIndex={0} aria-label={ta("regions")}
         className="relative min-h-0 flex-1 select-none overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-highlight"
+        // eslint-disable-next-line react-hooks/refs -- the cursor only: a drag past DRAG_SLOP calls setView on every move, so the read is always followed by a render
         style={{ touchAction: "none", cursor: dragged.current ? "grabbing" : "grab" }}
         onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}
         onDoubleClick={() => (view && Math.abs(view.s - fit.s) > 1e-6 ? setView(null) : actual())} onKeyDown={onKeyDown}>
