@@ -9,7 +9,7 @@ describe("getConfig", () => {
     expect(c.authMode).toBe("none");
     expect(c.engineUrl).toBe("http://127.0.0.1:8000");
     expect(c.engineSecret).toBe("");
-    expect(c.trialDocs).toBe(5);
+    expect(c.trialDocs).toBe(10);
     expect(c.masterKeyB64).toBeNull();
     expect(c.siteUrl).toBe("http://localhost:3000");
     expect(c.engineTimeoutMs).toBe(600_000);

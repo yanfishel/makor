@@ -47,7 +47,7 @@ services:
       ENGINE_TIMEOUT_MS: ${ENGINE_TIMEOUT_MS:-600000}
       DATA_DIR: /srv/data
       MAKOR_MASTER_KEY: ${MAKOR_MASTER_KEY:-}
-      TRIAL_DOCS: ${TRIAL_DOCS:-5}
+      TRIAL_DOCS: ${TRIAL_DOCS:-10}
       API_RATE_LIMIT_PER_MIN: ${API_RATE_LIMIT_PER_MIN:-30}
       API_SEARCH_RATE_LIMIT_PER_MIN: ${API_SEARCH_RATE_LIMIT_PER_MIN:-20}
       # `-` not `:-`: set but empty in .env turns the daily refresh off; unset keeps 03:30.
