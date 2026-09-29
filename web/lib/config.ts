@@ -53,7 +53,7 @@ export function getConfig(env: Partial<NodeJS.ProcessEnv> = process.env): Config
   const refreshRaw = (env.MAKOR_REGISTRIES_REFRESH_AT ?? "").trim();
   const registriesRefreshAt = refreshRaw ? parseRefreshAt(refreshRaw) : null;
   if (refreshRaw && !registriesRefreshAt) throw new Error(`MAKOR_REGISTRIES_REFRESH_AT must be HH:MM (24-hour, Israeli time) or empty, got "${refreshRaw}"`);
-  const trialRaw = (env.TRIAL_DOCS ?? "5").trim();
+  const trialRaw = (env.TRIAL_DOCS ?? "10").trim();
   const trialDocs = Number(trialRaw);
   if (!Number.isInteger(trialDocs) || trialDocs < 0) throw new Error(`TRIAL_DOCS must be a non-negative integer, got "${trialRaw}"`);
   const engineTimeoutRaw = (env.ENGINE_TIMEOUT_MS ?? "600000").trim();

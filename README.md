@@ -152,7 +152,7 @@ read it. Copy [`.env.example`](.env.example); its comments carry the generate co
 | `MAKOR_CLASSIFY_EFFORT` | `low` | — | The classifier's effort on Anthropic; empty = the API default |
 | `MAKOR_OLLAMA_URL` | `http://ollama:11434` · `localhost` | — | Only for an Ollama on another host |
 | **Limits** | | | |
-| `TRIAL_DOCS` | `5` | — | Free documents per cloud account before its own Anthropic key is needed |
+| `TRIAL_DOCS` | `10` | — | Free documents per cloud account before its own Anthropic key is needed |
 | `API_RATE_LIMIT_PER_MIN` | `30` | — | Requests a minute per API key on `/api/v1/*` (`0` = off) |
 | `API_SEARCH_RATE_LIMIT_PER_MIN` | `20` | — | The same for the registries search |
 | `MAKOR_REGISTRIES_REFRESH_AT` | `03:30` (compose and `.env.example`) · off when unset or empty | — | Israeli time (`HH:MM`) of the daily registries refresh; empty = only *Refresh all* |
