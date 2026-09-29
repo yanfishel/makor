@@ -12,6 +12,7 @@ export function getSettings(db: Db, userId: string): UserSettingsRow {
 
 export const MODEL_CHOICES = [
   { id: "claude-opus-5", label: "Claude Opus 5", recommended: true },
+  { id: "claude-sonnet-5-5", label: "Claude Sonnet 5.5", recommended: false },
   { id: "claude-sonnet-5", label: "Claude Sonnet 5", recommended: false },
   { id: "claude-haiku-4-5", label: "Claude Haiku 4.5", recommended: false },
 ] as const;

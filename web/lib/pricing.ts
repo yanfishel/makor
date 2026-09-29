@@ -1,6 +1,6 @@
 import type { EngineUsage } from "@/lib/engine";
 
-/** Anthropic list prices in USD per million tokens (first-party API; cached 2026-06-24 from the
+/** Anthropic list prices in USD per million tokens (first-party API; cached 2026-09-29 from the
  * claude-api reference). Cache reads are a tenth of the input rate and cache writes five quarters
  * of it on every model here; Fable's cache read is the one exception and is listed as published. */
 interface Price { input: number; output: number; cacheRead: number; cacheWrite: number }
@@ -10,7 +10,7 @@ const price = (input: number, output: number, cacheRead = input / 10): Price => 
 /** The date of the price list below; shown next to every cost figure so staleness is visible.
  * Anthropic publishes no pricing API, so this table is updated by hand — from the claude-api
  * reference or https://www.anthropic.com/pricing — and the date bumped with it. */
-export const PRICES_DATE = "2026-06-24";
+export const PRICES_DATE = "2026-09-29";
 
 export const PRICES: Record<string, Price> = {
   "claude-fable-5-1": price(10, 50, 0.25),
@@ -19,6 +19,7 @@ export const PRICES: Record<string, Price> = {
   "claude-opus-4-8": price(5, 25),
   "claude-opus-4-7": price(5, 25),
   "claude-opus-4-6": price(5, 25),
+  "claude-sonnet-5-5": price(2, 10),
   "claude-sonnet-5": price(2, 10),
   "claude-sonnet-4-6": price(3, 15),
   "claude-haiku-4-5": price(1, 5),

@@ -266,6 +266,7 @@ The full reference — every field, limit, error code and a cheque example — i
 | Backend | Model | Cost / document | When |
 |---|---|---|---|
 | `anthropic` | `claude-opus-5` (cloud default) | ≈ $0.02–0.05 | best quality, recommended |
+| `anthropic` | `claude-sonnet-5-5` | ≈ $0.01 | the fastest cloud model (≈ 2× Opus); its MRZ read can fail the check digits on a foreign passport |
 | `anthropic` | `claude-sonnet-5` | ≈ $0.01 | balanced |
 | `anthropic` | `claude-haiku-4-5` | ≈ $0.004 | high volume |
 | `ollama` | `qwen3-vl:8b-instruct` (local default) | free | privacy-first, offline |
